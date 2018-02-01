@@ -29,7 +29,7 @@ def count(word_count, training_folder, training_set_is_ham):
     mails = os.listdir(training_folder)
     mail_count = len(mails)
     for filename in mails:
-        tokens = token_set(training_folder + "\\" + filename)
+        tokens = token_set(training_folder + "/" + filename)
         translator = str.maketrans('', '', string.punctuation)
         for words in tokens:
             words = words.translate(translator)
@@ -66,11 +66,11 @@ def main():
     word_count = {}
 
     # count spam emails into the dictionary
-    spam_training_folder = f"{sys.argv[1]}\\train\\spam"
+    spam_training_folder = f"{sys.argv[1]}/train/spam"
     spam_count = count(word_count, spam_training_folder, 0)
 
     # count ham emails into the dictionary
-    ham_training_folder = f"{sys.argv[1]}\\train\\ham"
+    ham_training_folder = f"{sys.argv[1]}/train/ham"
     ham_count = count(word_count, ham_training_folder, 1)
 
     word_prob = calculate(word_count, spam_count, ham_count)
@@ -80,7 +80,7 @@ def main():
     test_folder = f"{sys.argv[1]}\\test"
     test_mails = sorted(os.listdir(test_folder), key=fileToInt)
     for filename in test_mails:
-        tokens = token_set(test_folder + "\\" + filename)
+        tokens = token_set(test_folder + "/" + filename)
         file_spam_prob = math.log(spam_prob)
         file_ham_prob = math.log(ham_prob)
         translator = str.maketrans('', '', string.punctuation)
